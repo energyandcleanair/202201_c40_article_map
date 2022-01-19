@@ -702,7 +702,6 @@
       function addPowerplantPopup(map_) {
         map_.on("mouseenter", "layer-powerplants", function (e) {
           map_.getCanvas().style.cursor = "pointer";
-          console.log("AAA");
           var coordinates = e.features[0].geometry.coordinates.slice();
           var props = e.features[0].properties;
           var legend = `<div class="popup"><h4>${props.Plant}</h4><span>Fuel: ${props.Fuel}</span><span>Capacity: ${props.Capacity} MW</span></div>`;
@@ -723,7 +722,6 @@
       function addHotspotPopup(map_) {
         map_.on("mouseenter", "layer-hotspots-dots", function (e) {
           map_.getCanvas().style.cursor = "pointer";
-          console.log("AAA");
           var coordinates = e.features[0].geometry.coordinates.slice();
           var props = e.features[0].properties;
           var legend = `<div class="popup"><h4>${props.NASA_NAME}</h4><span>Type: ${props.SOURCETY}</span><span>Country: ${props.COUNTRY}</span></div>`;
@@ -746,7 +744,6 @@
           map_.getCanvas().style.cursor = "pointer";
           var coordinates = e.features[0].geometry.coordinates.slice();
           var props = e.features[0].properties;
-          console.log(e);
           var legend = `<div class="popup"><h4>${title}</h4><span>Level: ${props.level} µg/m3</span></div>`;
           while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
             coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
@@ -781,7 +778,6 @@
           map_.getCanvas().style.cursor = "pointer";
           var coordinates = e.features[0].geometry.coordinates.slice();
           var props = e.features[0].properties;
-          console.log(e);
           var legend = `<div class="popup"><h4>${props.NASA_NAME}</h4>
           <span>Type: ${props.SOURCETY}</span>
           <span>Country: ${props.COUNTRY}</span>
