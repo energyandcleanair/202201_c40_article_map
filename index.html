@@ -14,9 +14,19 @@
       crossorigin="anonymous"
     ></script>
     <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link
       href="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css"
       rel="stylesheet"
     />
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous"
+    ></script>
   </head>
   <body>
     <style>
@@ -247,6 +257,47 @@
       .color-volcano {
         border-color: #5b9279;
       }
+
+      .btn-group {
+        margin-top: 10px;
+        width: 100%;
+      }
+
+      .btn-outline-primary {
+        color: #35416c;
+        border-color: #35416c;
+      }
+
+      btn-check:active + .btn-outline-primary,
+      .btn-check:checked + .btn-outline-primary,
+      .btn-outline-primary.active,
+      .btn-outline-primary.dropdown-toggle.show,
+      .btn-outline-primary:active {
+        color: #fff;
+        background-color: #35416c;
+        border-color: #35416c;
+      }
+
+      .btn-outline-primary:hover {
+        color: #fff;
+        background-color: #8cc9d0;
+        border-color: #8cc9d0;
+      }
+
+      .btn-outline-primary:focus,
+      .btn-outline-primary:active:focus,
+      .btn-outline-primary.active,
+      .btn-check:active + .btn-outline-primary:focus,
+      .btn-check:checked + .btn-outline-primary:focus,
+      .btn-outline-primary.active:focus,
+      .btn-outline-primary.dropdown-toggle.show:focus,
+      .btn-outline-primary:active:focus {
+        box-shadow: 0 0 0 0.25rem #8cc9d0 !important ;
+      }
+
+      .btn-primary:active {
+        background-color: #8cc9d0;
+      }
     </style>
     <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-compare/v0.4.0/mapbox-gl-compare.js"></script>
     <link
@@ -262,6 +313,55 @@
     </div>
     <div class="legend">
       <nav id="menu"></nav>
+
+      <div class="btn-group" id="radio-pollutant">
+        <input
+          type="radio"
+          class="btn-check"
+          name="pollutant"
+          id="radio_pm25"
+          autocomplete="off"
+          value="pm25"
+          checked
+        />
+        <label class="btn btn-outline-primary" for="radio_pm25">PM 2.5</label>
+
+        <input
+          type="radio"
+          class="btn-check"
+          name="pollutant"
+          id="radio_no2"
+          autocomplete="off"
+          value="no2"
+        />
+        <label class="btn btn-outline-primary" for="radio_no2">NO2</label>
+      </div>
+      <br />
+      <div class="btn-group" id="radio-scenario">
+        <input
+          type="radio"
+          class="btn-check"
+          name="scenario"
+          id="radio_operating"
+          autocomplete="off"
+          value="operating"
+          checked
+        />
+        <label class="btn btn-outline-primary" for="radio_operating"
+          >Operating</label
+        >
+
+        <input
+          type="radio"
+          class="btn-check"
+          name="scenario"
+          id="radio_new"
+          autocomplete="off"
+          value="new"
+        />
+        <label class="btn btn-outline-primary" for="radio_new">New</label>
+      </div>
+
       <div id="legend" class="legend-box">
         <h4>Annual concentration<br />[µg/m3]</h4>
       </div>
@@ -442,6 +542,8 @@
 
       // A selector or reference to HTML element
       var container = "map";
+      var selected_pollutant = "pm25";
+      var selected_scenario = "operating";
 
       var map = new mapboxgl.Map({
         container: container,
@@ -492,7 +594,7 @@
           id: "layer-pm25-new",
           source: "source-pm25-new",
           type: "fill",
-          layout: { visibility: "visible" },
+          layout: { visibility: "none" },
           paint: {
             "fill-color": [
               "interpolate",
@@ -532,7 +634,7 @@
           id: "layer-no2-new",
           source: "source-no2-new",
           type: "fill",
-          layout: { visibility: "visible" },
+          layout: { visibility: "none" },
           paint: {
             "fill-color": [
               "interpolate",
@@ -552,7 +654,7 @@
           id: "layer-no2-operating",
           source: "source-no2-operating",
           type: "fill",
-          layout: { visibility: "visible" },
+          layout: { visibility: "none" },
           paint: {
             "fill-color": [
               "interpolate",
@@ -632,66 +734,83 @@
       });
 
       // enumerate ids of the layers
-      var toggleableLayerIds = [
-        {
-          id: "layer-powerplants",
-          name: "Operating coal-fired power plants",
-          visibility: "visible",
-        },
-        {
-          id: "layer-pm25-new",
-          name: "PM2.5 New power plants",
-          visibility: "visible",
-        },
-        {
-          id: "layer-pm25-operating",
-          name: "PM2.5 Operating power plants",
-          visibility: "visible",
-        },
-        {
-          id: "layer-no2-new",
-          name: "NO2 New power plants",
-          visibility: "visible",
-        },
-        {
-          id: "layer-no2-operating",
-          name: "NO2 Operating power plants",
-          visibility: "visible",
-        },
-      ];
 
-      // set up the corresponding toggle button for each layer
-      for (var i = 0; i < toggleableLayerIds.length; i++) {
-        var id = toggleableLayerIds[i].id;
-        var name = toggleableLayerIds[i].name;
-        var visibility = toggleableLayerIds[i].visibility;
+      $("input[name='pollutant'],input[name='scenario']").change(function () {
+        let pollutant = $('input[name="pollutant"]:checked').val();
+        let scenario = $('input[name="scenario"]:checked').val();
+        show_layer(pollutant, scenario);
+      });
 
-        var link = document.createElement("a");
-        link.href = "#";
-        link.className = visibility == "visible" ? "active" : "";
-        link.textContent = name;
-        link.id = id;
+      function show_layer(pollutant, scenario) {
+        map.setLayoutProperty("layer-pm25-new", "visibility", "none");
+        map.setLayoutProperty("layer-pm25-operating", "visibility", "none");
+        map.setLayoutProperty("layer-no2-new", "visibility", "none");
+        map.setLayoutProperty("layer-no2-operating", "visibility", "none");
 
-        link.onclick = function (e) {
-          var clickedLayer = this.id;
-          e.preventDefault();
-          e.stopPropagation();
-
-          var visibility = map.getLayoutProperty(clickedLayer, "visibility");
-
-          // toggle layer visibility by changing the layout object's visibility property
-          if (visibility === "visible") {
-            map.setLayoutProperty(clickedLayer, "visibility", "none");
-            this.className = "";
-          } else {
-            this.className = "active";
-            map.setLayoutProperty(clickedLayer, "visibility", "visible");
-          }
-        };
-
-        var layers = document.getElementById("menu");
-        layers.appendChild(link);
+        let layer_id = "layer-" + pollutant + "-" + scenario;
+        map.setLayoutProperty(layer_id, "visibility", "visible");
       }
+
+      // var toggleableLayerIds = [
+      //   {
+      //     id: "layer-powerplants",
+      //     name: "Operating coal-fired power plants",
+      //     visibility: "visible",
+      //   },
+      //   {
+      //     id: "layer-pm25-new",
+      //     name: "PM2.5 New power plants",
+      //     visibility: "visible",
+      //   },
+      //   {
+      //     id: "layer-pm25-operating",
+      //     name: "PM2.5 Operating power plants",
+      //     visibility: "visible",
+      //   },
+      //   {
+      //     id: "layer-no2-new",
+      //     name: "NO2 New power plants",
+      //     visibility: "visible",
+      //   },
+      //   {
+      //     id: "layer-no2-operating",
+      //     name: "NO2 Operating power plants",
+      //     visibility: "visible",
+      //   },
+      // ];
+
+      // // set up the corresponding toggle button for each layer
+      // for (var i = 0; i < toggleableLayerIds.length; i++) {
+      //   var id = toggleableLayerIds[i].id;
+      //   var name = toggleableLayerIds[i].name;
+      //   var visibility = toggleableLayerIds[i].visibility;
+
+      //   var link = document.createElement("a");
+      //   link.href = "#";
+      //   link.className = visibility == "visible" ? "active" : "";
+      //   link.textContent = name;
+      //   link.id = id;
+
+      //   link.onclick = function (e) {
+      //     var clickedLayer = this.id;
+      //     e.preventDefault();
+      //     e.stopPropagation();
+
+      //     var visibility = map.getLayoutProperty(clickedLayer, "visibility");
+
+      //     // toggle layer visibility by changing the layout object's visibility property
+      //     if (visibility === "visible") {
+      //       map.setLayoutProperty(clickedLayer, "visibility", "none");
+      //       this.className = "";
+      //     } else {
+      //       this.className = "active";
+      //       map.setLayoutProperty(clickedLayer, "visibility", "visible");
+      //     }
+      //   };
+
+      //   var layers = document.getElementById("menu");
+      //   layers.appendChild(link);
+      // }
       // Popup
       // Create a popup, but don't add it to the map yet.
       var popup = new mapboxgl.Popup({
