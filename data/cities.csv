@@ -1,0 +1,65 @@
+cluster,domain_center_lat,domain_center_lon,city,country,lat,lon,operating_300km,new_300km,wishlist,notes,include,C40 comment,analyse results,range,GID_0,NAME_0,GID_1,NAME_1,GID_2,NAME_2,GID_3,NAME_3,adm_level,city_short,city_no,runName
+1,5.3599517,-4.0082563,Abidjan,C??te d?????Ivoire,5.3599517,-4.0082563,0,700,N,NA,Y,NA,Y,0,CIV,C????te d'Ivoire,CIV.1_1,Abidjan,CIV.1.1_1,Abidjan,CIV.1.1.1_1,Abidjan,1,Abidjan,1,Abidjan
+2,25.2048493,55.2707828,Dubai,United Arab Emirates,25.2048493,55.2707828,0,2400,N,NA,Y,NA,Y,0,ARE,United Arab Emirates,ARE.3_1,Dubai,ARE.3.3_1,Sector 3,ARE.3.3.49_1,Trade Center Second,1,Dubai,2,Dubai
+3,32.124052,119.1113565,Nanjing,China,32.060255,118.796877,150581,20309,Y,NA,Y,NA,Y,61.01518353,CHN,China,CHN.15_1,Jiangsu,CHN.15.4_1,Nanjing,CHN.15.4.6_1,Nanjing,2,Nanjing,3,Nanjing
+3,32.124052,119.1113565,Zhenjiang,China,32.187849,119.425836,133661,14219,Y,NA,Y,NA,Y,61.01518353,CHN,China,CHN.15_1,Jiangsu,CHN.15.13_1,Zhenjiang,CHN.15.13.5_1,Zhenjiang,2,Zhenjiang,4,Nanjing
+4,30.274084,120.15507,Hangzhou,China,30.274084,120.15507,128376,4934,Y,NA,Y,NA,Y,0,CHN,China,CHN.31_1,Zhejiang,CHN.31.1_1,Hangzhou,CHN.31.1.3_1,Hangzhou,2,Hangzhou,5,Hangzhou
+5,31.230416,121.473701,Shanghai,China,31.230416,121.473701,107491,4934,Y,NA,Y,NA,Y,0,CHN,China,CHN.24_1,Shanghai,CHN.24.1_1,Shanghai,CHN.24.1.10_1,Shanghai,2,Shanghai,6,Shanghai
+6,39.9041999,116.4073963,Beijing,China,39.9041999,116.4073963,77004,6290,Y,NA,Y,NA,Y,0,CHN,China,CHN.2_1,Beijing,CHN.2.1_1,Beijing,CHN.2.1.1_1,Beijing,2,Beijing,7,Beijing
+7,36.067108,120.382609,Qingdao,China,36.067108,120.382609,71575,7595,Y,NA,Y,NA,Y,0,CHN,China,CHN.23_1,Shandong,CHN.23.10_1,Qingdao,CHN.23.10.6_1,Laoshan,2,Qingdao,8,Qingdao
+8,22.66383663,113.830537,Shenzhen,China,22.543096,114.057865,54968.2,8360,Y,NA,Y,NA,Y,129.1701809,CHN,China,CHN.6_1,Guangdong,CHN.6.15_1,Shenzhen,CHN.6.15.2_1,Shenzhen,2,Shenzhen,9,Shenzhen
+8,22.66383663,113.830537,Hong Kong,China,22.3193039,114.1693611,54148.2,8360,Y,NA,Y,NA,Y,129.1701809,HKG,Hong Kong,HKG.17_1,Yau Tsim Mong,NA,NA,NA,NA,0,HongKong,10,Shenzhen
+8,22.66383663,113.830537,Guangzhou,China,23.12911,113.264385,50444.2,10480,Y,NA,Y,NA,Y,129.1701809,CHN,China,CHN.6_1,Guangdong,CHN.6.4_1,Guangzhou,CHN.6.4.2_1,Guangzhou,2,Guangzhou,11,Shenzhen
+9,26.074478,119.296482,Fuzhou,China,26.074478,119.296482,51509,2190,Y,NA,Y,NA,Y,0,CHN,China,CHN.4_1,Fujian,CHN.4.1_1,Fuzhou,CHN.4.1.3_1,Fuzhou,2,Fuzhou,12,Fuzhou
+10,30.592849,114.305539,Wuhan,China,30.592849,114.305539,48629,20379,Y,NA,Y,NA,Y,0,CHN,China,CHN.13_1,Hubei,CHN.13.12_1,Wuhan,CHN.13.12.4_1,Wuhan,2,Wuhan,13,Wuhan
+11,-25.99564193,28.2621472,Johannesburg,South Africa,-26.2041028,28.0473051,41361.8,7768.8,Y,NA,Y,NA,Y,74.85261075,ZAF,South Africa,ZAF.3_1,Gauteng,ZAF.3.1_1,City of Johannesburg,ZAF.3.1.1_1,City of Johannesburg,2,Johannesburg,14,Johannesburg
+11,-25.99564193,28.2621472,Tshwane,South Africa,-25.6051205,28.3929417,41361.8,7768.8,Y,NA,Y,NA,Y,74.85261075,ZAF,South Africa,ZAF.3_1,Gauteng,ZAF.3.2_1,City of Tshwane,ZAF.3.2.1_1,City of Tshwane,2,Tshwane,15,Johannesburg
+11,-25.99564193,28.2621472,Ekhuruleni,South Africa,-26.1777025,28.3461948,41361.8,7768.8,Y,NA,Y,NA,Y,74.85261075,ZAF,South Africa,ZAF.3_1,Gauteng,ZAF.3.3_1,Ekurhuleni,ZAF.3.3.1_1,Ekurhuleni,2,Ekhuruleni,16,Johannesburg
+12,38.914003,121.614682,Dalian,China,38.914003,121.614682,38848,7150,Y,NA,Y,NA,Y,0,CHN,China,CHN.18_1,Liaoning,CHN.18.4_1,Dalian,CHN.18.4.2_1,Dalian,2,Dalian,17,Dalian
+13,37.566535,126.9779692,Seoul,Republic of Korea,37.566535,126.9779692,31822.5,5180,Y,Use Dalian domain to assess long-range impact from China,Y,NA,Y,0,KOR,South Korea,KOR.16_1,Seoul,KOR.16.13_1,Jongro,NA,NA,1,Seoul,18,Seoul
+14,49.3987524,8.6724335,Heidelberg,Germany,49.3987524,8.6724335,26975.7,0,Y,NA,Y,NA,Y,0,DEU,Germany,DEU.1_1,Baden-W????rttemberg,DEU.1.15_1,Heidelberg,DEU.1.15.1_1,Heidelberg,2,Heidelberg,19,Heidelberg
+15,52.2296756,21.0122287,Warsaw,Poland,52.2296756,21.0122287,26364.4,1205,Y,NA,Y,NA,Y,0,POL,Poland,POL.7_1,Mazowieckie,POL.7.36_1,Warszawa,POL.7.36.1_1,Warszawa,2,Warsaw,20,Warsaw
+16,52.5200066,13.404954,Berlin,Germany,52.5200066,13.404954,25554.4,460,Y,NA,Y,NA,Y,0,DEU,Germany,DEU.3_1,Berlin,DEU.3.1_1,Berlin,DEU.3.1.1_1,Berlin,1,Berlin,21,Berlin
+17,52.14599675,4.69093575,Amsterdam,The Netherlands,52.3675734,4.9041389,24783.4,0,N,NA,Y,NA,Y,57.30131376,NLD,Netherlands,NLD.9_1,Noord-Holland,NLD.9.4_1,Amsterdam,NA,NA,2,Amsterdam,22,Amsterdam
+17,52.14599675,4.69093575,Rotterdam,The Netherlands,51.9244201,4.4777326,21406.3,0,N,NA,Y,NA,Y,57.30131376,NLD,Netherlands,NLD.14_1,Zuid-Holland,NLD.14.67_1,Rotterdam,NA,NA,2,Rotterdam,23,Amsterdam
+18,39.4298881,-76.1010461,"Washington, DC",United States,38.9071923,-77.0368707,24575.1,0,N,Could cover NY with the same domain,Y,NA,Y,198.5860575,USA,United States,USA.9_1,District of Columbia,USA.9.1_1,District of Columbia,NA,NA,1,WashingtonDC,24,WashingtonDC
+18,39.4298881,-76.1010461,Philadelphia,United States,39.9525839,-75.1652215,9855.8,0,Y,joint domain with NYC,Y,NA,Y,198.5860575,USA,United States,USA.39_1,Pennsylvania,USA.39.51_1,Philadelphia,NA,NA,2,Philadelphia,25,WashingtonDC
+19,22.572646,88.363895,Kolkata,India,22.572646,88.363895,20601.5,6660,Y,NA,Y,NA,Y,0,IND,India,IND.36_1,West Bengal,IND.36.11_1,Kolkata,IND.36.11.1_1,Alipur,2,Kolkata,26,Kolkata
+20,35.5599329,139.6441373,Tokyo,Japan,35.6761919,139.6503106,18267,4100,Y,NA,Y,NA,Y,25.82234643,JPN,Japan,JPN.41_1,Tokyo,JPN.41.48_1,Suginami,NA,NA,1,Tokyo,27,Tokyo
+20,35.5599329,139.6441373,Yokohama,Japan,35.4436739,139.6379639,18267,4100,Y,NA,Y,NA,Y,25.82234643,JPN,Japan,JPN.19_1,Kanagawa,JPN.19.29_1,Yokohama,NA,NA,2,Yokohama,28,Tokyo
+21,21.0277644,105.8341598,Hanoi,Vietnam,21.0277644,105.8341598,17015,9960,Y,NA,Y,NA,Y,0,VNM,Vietnam,VNM.27_1,Ha Noi,VNM.27.7_1,Dong Da,NA,NA,1,Hanoi,29,Hanoi
+22,41.8781136,-87.6297982,Chicago,United States,41.8781136,-87.6297982,16985.6,0,Y,NA,Y,NA,Y,0,USA,United States,USA.14_1,Illinois,USA.14.16_1,Cook,NA,NA,2,Chicago,30,Chicago
+23,13.0826802,80.2707184,Chennai,India,13.0826802,80.2707184,16467,9460,Y,NA,Y,NA,Y,0,IND,India,IND.31_1,Tamil Nadu,IND.31.2_1,Chennai,IND.31.2.2_1,Fort Tondiarpet,2,Chennai,31,Chennai
+24,30.572815,104.066801,Chengdu,China,30.572815,104.066801,16140,2000,Y,NA,Y,NA,Y,0,CHN,China,CHN.26_1,Sichuan,CHN.26.2_1,Chengdu,CHN.26.2.1_1,Chengdu Qu,2,Chengdu,32,Chengdu
+25,27.8082464,76.44488055,Jaipur,India,26.9124336,75.7872709,15130,1980,Y,NA,Y,NA,Y,237.0888372,IND,India,IND.29_1,Rajasthan,IND.29.17_1,Jaipur,IND.29.17.6_1,Jaipur,2,Jaipur,33,Delhi
+25,27.8082464,76.44488055,Delhi NCT,India,28.7040592,77.1024902,14973,3300,Y,NA,Y,NA,Y,237.0888372,IND,India,IND.25_1,NCT of Delhi,IND.25.1_1,West,IND.25.1.1_1,Delhi,1,DelhiNCT,34,Delhi
+27,12.9715987,77.5945627,Bengaluru,India,12.9715987,77.5945627,14872,8660,Y,NA,Y,NA,Y,0,IND,India,IND.16_1,Karnataka,IND.16.3_1,Bangalore,IND.16.3.2_1,Bangalore,2,Bengaluru,35,Bengaluru
+28,30.01378985,-96.5564318,Houston,United States,29.7604267,-95.3698028,14428.2,0,Y,NA,Y,NA,Y,235.739689,USA,United States,USA.44_1,Texas,USA.44.113_1,Houston,NA,NA,2,Houston,36,Houston
+28,30.01378985,-96.5564318,Austin,United States,30.267153,-97.7430608,11844,0,Y,NA,Y,NA,Y,235.739689,USA,United States,USA.44_1,Texas,USA.44.8_1,Austin,NA,NA,2,Austin,37,Houston
+29,-6.2087634,106.84559900000001,Jakarta,Indonesia,-6.2087634,106.84559900000001,14019.6,7170,Y,NA,Y,NA,Y,0,IDN,Indonesia,IDN.7_1,Jakarta Raya,IDN.7.3_1,Jakarta Selatan,IDN.7.3.10_1,Setia Budi,1,Jakarta,38,Jakarta
+30,3.139003,101.686855,Kuala Lumpur,Malaysia,3.139003,101.686855,13424,600,Y,NA,Y,NA,Y,0,MYS,Malaysia,MYS.4_1,Kuala Lumpur,MYS.4.1_1,Kuala Lumpur,NA,NA,1,KualaLumpur,39,KualaLumpur
+31,41.0082376,28.9783589,Istanbul,Turkey,41.0082376,28.9783589,13111.2,5370,Y,NA,Y,NA,Y,0,TUR,Turkey,TUR.40_1,Istanbul,TUR.40.20_1,Fatih,NA,NA,1,Istanbul,40,Istanbul
+33,-33.8688197,151.2092955,Sydney,Australia,-33.8688197,151.2092955,10265,0,Y,NA,Y,NA,Y,0,AUS,Australia,AUS.5_1,New South Wales,AUS.5.122_1,Sydney,NA,NA,2,Sydney,41,Sydney
+35,10.8230989,106.6296638,Ho Chi Minh City,Vietnam,10.8230989,106.6296638,8087,5600,Y,NA,Y,NA,Y,0,VNM,Vietnam,VNM.25_1,Ho Chi Minh,VNM.25.22_1,T????n B????nh,VNM.25.22.7_1,Ward 15,1,HoChiMinhCity,42,HoChiMinhCit
+36,1.352083,103.819836,Singapore,Singapore,1.352083,103.819836,8065,800,Y,NA,Y,NA,Y,0,SGP,Singapore,SGP.3_1,North,NA,NA,NA,NA,0,Singapore,43,Singapore
+37,23.810332,90.4125181,Dhaka,Bangladesh,23.810332,90.4125181,7130,17704,Y,NA,Y,NA,Y,0,BGD,Bangladesh,BGD.3_1,Dhaka,BGD.3.1_1,Dhaka,BGD.3.1.5_1,Cantonment,1,Dhaka,44,Dhaka
+38,14.6760413,121.0437003,Quezon City,Philippines,14.6760413,121.0437003,6509,4141,Y,NA,Y,NA,Y,0,PHL,Philippines,PHL.47_1,Metropolitan Manila,PHL.47.14_1,Quezon City,PHL.47.14.127_1,Tandang Sora,2,QuezonCity,45,QuezonCity
+39,29.9510658,-90.0715323,New Orleans,United States,29.9510658,-90.0715323,5142.8,0,Y,NA,Y,NA,Y,0,USA,United States,USA.19_1,Louisiana,USA.19.36_1,Orleans,NA,NA,2,NewOrleans,46,NewOrleans
+40,32.01962465,35.3462013,Tel Aviv,Israel,32.0852999,34.7817676,4930,0,N,NA,Y,NA,Y,107.6369677,ISR,Israel,ISR.7_1,Tel Aviv,NA,NA,NA,NA,1,TelAviv,47,TelAviv
+40,32.01962465,35.3462013,Amman,Jordan,31.9539494,35.910635,4930,0,N,NA,Y,NA,Y,107.6369677,JOR,Jordan,JOR.2_1,Amman,JOR.2.7_1,Wadi Essier,NA,NA,1,Amman,48,TelAviv
+41,-37.8136276,144.9630576,Melbourne,Australia,-37.8136276,144.9630576,4721,1320,Y,NA,Y,NA,Y,0,AUS,Australia,AUS.10_1,Victoria,AUS.10.44_1,Melbourne,NA,NA,2,Melbourne,49,Melbourne
+42,13.7563309,100.5017651,Bangkok,Thailand,13.7563309,100.5017651,3478,600,Y,NA,Y,NA,Y,0,THA,Thailand,THA.3_1,Bangkok Metropolis,THA.3.33_1,Phra Nakhon,THA.3.33.1_1,NA,1,Bangkok,50,Bangkok
+43,24.8607343,67.0011364,Karachi,Pakistan,24.8607343,67.0011364,3450,3300,Y,NA,Y,NA,Y,0,PAK,Pakistan,PAK.8_1,Sind,PAK.8.2_1,Karachi,PAK.8.2.3_1,Karachi South,2,Karachi,51,Karachi
+44,45.4408474,12.3155151,Venice,Italy,45.4408474,12.3155151,3341,0,Y,NA,Y,NA,Y,0,ITA,Italy,ITA.20_1,Veneto,ITA.20.5_1,Venezia,ITA.20.5.43_1,Venezia,2,Venice,52,Venice
+45,55.755826,37.6172999,Moscow,Russia,55.755826,37.6172999,3170,335,N,NA,Y,NA,Y,0,RUS,Russia,RUS.43_1,Moscow City,RUS.43.1_1,Central,RUS.43.1.7_1,117,2,Moscow,53,Moscow
+46,41.9027835,12.4963655,Rome,Italy,41.9027835,12.4963655,2130,0,Y,NA,Y,NA,Y,0,ITA,Italy,ITA.8_1,Lazio,ITA.8.4_1,Roma,ITA.8.4.97_1,Roma,2,Rome,54,Rome
+48,5.4793131,-74.81895365,Medellin,Colombia,6.2476376,-75.5658153,1024.5,300,Y,impact likely to be small,Y,NA,Y,237.2195896,COL,Colombia,COL.2_1,Antioquia,COL.2.68_1,Medell????n,NA,NA,2,Medellin,55,Colombia
+48,5.4793131,-74.81895365,Bogota,Colombia,4.7109886,-74.072092,587.5,0,Y,NA,Y,NA,Y,237.2195896,COL,Colombia,COL.14_1,Cundinamarca,COL.14.79_1,Santaf???? de Bogot????,NA,NA,2,Bogota,56,Colombia
+49,37.9838096,23.7275388,Athens,Greece,37.9838096,23.7275388,350,0,Y,expect significant long-range impact from Turkey + North Greece,Y,NA,Y,0,GRC,Greece,GRC.3_1,Attica,GRC.3.1_1,Attica,GRC.3.1.12_1,Athens,2,Athens,57,Athens
+51,18,-102.1,Ciudad de Mexico,Mexico,19.4326077,-99.133208,0,0,N,NA,Y,NA,Y,461.5269172,MEX,Mexico,MEX.9_1,Distrito Federal,MEX.9.2_1,Azcapotzalco,NA,NA,1,CiudaddeMexico,58,CiudaddeMexi
+51,18,-102.1,Guadalajara,Mexico,20.6596988,-103.3496092,0,0,N,set up a Mexico domain,Y,NA,Y,461.5269172,MEX,Mexico,MEX.14_1,Jalisco,MEX.14.43_1,Guadalajara,NA,NA,2,Guadalajara,59,CiudaddeMexi
+52,28.4,-100.8,Nava,Mexico,28.4,-100.8,NA,NA,NA,NA,Y,NA,NA,0,MEX,Mexico,MEX.7_1,Coahuila,MEX.7.3_1,Allende,NA,NA,1,Nava,60,Nava
+53,19.076,72.8777,Mumbai,India,19.076,72.8777,NA,NA,NA,NA,Y,NA,NA,0,IND,India,IND.20_1,Maharashtra,IND.20.18_1,Mumbai Suburban,IND.20.18.5_1,n.a. ( 1569),2,Mumbai,61,Mumbai
+54,26.16,-80.85,Miami,United States,26.16,-80.85,NA,NA,NA,NA,Y,NA,NA,0,USA,United States,USA.10_1,Florida,USA.10.43_1,Miami-Dade,NA,NA,2,Miami,62,Miami
+55,42.358333,-71.058333,New York City,United States,40.7127753,-74.0059728,NA,NA,NA,NA,NA,NA,NA,NA,USA,United States,USA.33_1,New York,USA.33.32_1,New York,NA,NA,2,NewYorkCity,NA,Boston
+55,42.358333,-71.058333,Boston,United States,42.3600825,-71.0588801,NA,NA,NA,NA,NA,NA,NA,NA,USA,United States,USA.22_1,Massachusetts,USA.22.13_1,Suffolk,NA,NA,2,Boston,NA,Boston
