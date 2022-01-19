@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>C40 Health Impact Assessment</title>
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <script src="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/chroma-js/2.1.0/chroma.min.js"
+      integrity="sha512-yocoLferfPbcwpCMr8v/B0AB4SWpJlouBwgE0D3ZHaiP1nuu5djZclFEIj9znuqghaZ3tdCMRrreLoM8km+jIQ=="
+      crossorigin="anonymous"
+    ></script>
+    <link
+      href="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      #map {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+      }
+
+      body {
+        overflow: hidden;
+      }
+
+      body * {
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      .title {
+        background-color: #ffffffa0;
+        border-radius: 3px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        font: 12px/20px "Helvetica Neue", Arial, Helvetica, sans-serif;
+        padding: 10px;
+        position: absolute;
+        z-index: 1;
+        top: 30px;
+        left: 10px;
+      }
+
+      .title h2 {
+        color: "black";
+        margin: 0;
+      }
+
+      .legend {
+        position: absolute;
+        bottom: 30px;
+        right: 10px;
+      }
+      .legend-box {
+        background-color: #fff;
+        border-radius: 3px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        font: 12px/20px "Helvetica Neue", Arial, Helvetica, sans-serif;
+        padding: 10px;
+        margin-top: 10px;
+        z-index: 1;
+      }
+
+      .legend-box h4 {
+        margin: 0 0 10px;
+      }
+
+      .legend-box div span {
+        border-radius: 50%;
+        display: inline-block;
+        height: 10px;
+        margin-right: 5px;
+        width: 10px;
+      }
+
+      #menu {
+        width: 100%;
+        background: #fff;
+        z-index: 1;
+        /* top: 10px; */
+        /* right: 10px; */
+        border-radius: 3px;
+        /* width: 120px; */
+        /* border: 1px solid rgba(0, 0, 0, 0.4); */
+        font-family: "Open Sans", sans-serif;
+      }
+
+      #menu a {
+        font-size: 12px;
+        color: #404040;
+        display: block;
+        margin: 0;
+        padding: 0;
+        padding: 10px;
+        text-decoration: none;
+        /* border-bottom: 1px solid rgba(0, 0, 0, 0.25); */
+        text-align: center;
+      }
+
+      #menu a:last-child {
+        border: none;
+      }
+
+      #menu a:hover {
+        background-color: #f8f8f8;
+        color: #404040;
+      }
+
+      #menu a.active {
+        background-color: #3887be;
+        color: #ffffff;
+      }
+
+      #menu a.active:hover {
+        background: #3074a4;
+      }
+
+      .popup h4 {
+        margin: 0;
+      }
+
+      .popup span {
+        display: block;
+      }
+
+      .popup .value {
+        font-weight: 500;
+      }
+      .popup .yoy-red {
+        color: red;
+        font-weight: 500;
+      }
+
+      .popup .yoy-green {
+        color: green;
+        font-weight: 500;
+      }
+
+      .popup h5 {
+        margin: 10px 0 0 0;
+      }
+
+      /* Boundaries tooltip */
+      .tooltip {
+        position: relative;
+        display: inline-block;
+        /* border-bottom: 1px dotted black; If you want dots under the hoverable text */
+      }
+      .tooltip .tooltiptext {
+        visibility: hidden;
+        width: 280px;
+        background-color: #555;
+        color: #fff;
+        text-align: center;
+        padding: 5px;
+        border-radius: 6px;
+
+        /* Position the tooltip text */
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        right: 30%;
+        margin-right: -80px;
+
+        /* Fade in tooltip */
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+      .tooltip .tooltiptext::after {
+        content: "";
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        margin-left: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: #555 transparent transparent transparent;
+      }
+      .tooltip:hover .tooltiptext {
+        visibility: visible;
+        opacity: 1;
+      }
+
+      /* Logos and intro */
+      .logos-box {
+        background-color: #fff;
+        border-radius: 3px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        font: 12px/20px "Helvetica Neue", Arial, Helvetica, sans-serif;
+        /*padding: 10px;*/
+        /*margin-top: 10px;*/
+        position: absolute;
+        bottom: 40px;
+        left: 10px;
+        /*width: 260px;*/
+      }
+      .logos-box .intro {
+        margin-bottom: 10px;
+        align: left;
+      }
+      .logos {
+        display: flex;
+      }
+      .logos a {
+        padding: 5px;
+      }
+
+      .circle {
+        height: 15px !important;
+        width: 15px !important;
+        background-color: transparent;
+        border-radius: 50%;
+        display: inline-block;
+        border: 2px solid;
+        margin-bottom: 5px;
+        margin-top: 5px;
+        vertical-align: middle;
+      }
+
+      .color-coal {
+        border-color: #2d2a3e;
+      }
+
+      .color-oilgas {
+        border-color: blue;
+      }
+
+      .color-smelter {
+        border-color: #f93445;
+      }
+
+      .color-volcano {
+        border-color: #5b9279;
+      }
+    </style>
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-compare/v0.4.0/mapbox-gl-compare.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-compare/v0.4.0/mapbox-gl-compare.css"
+      type="text/css"
+    />
+    <div id="map-container">
+      <div id="map"></div>
+    </div>
+    <div id="title" class="title">
+      <h2>C40 | Coal-fired power plants contribution to air pollution</h2>
+    </div>
+    <div class="legend">
+      <nav id="menu"></nav>
+      <div id="legend" class="legend-box">
+        <h4>Annual concentration<br />[µg/m3]</h4>
+      </div>
+      <!--   <div id="legend" class="legend-box">
+        <h4>SO2 Emission Hotspot</br>[kt / year]</h4>
+        <div><span class="circle color-coal"></span>Coal</div>
+        <div><span class="circle color-oilgas"></span>Oil & Gas</div>
+        <div><span class="circle color-smelter"></span>Smelter</div>
+      </div> -->
+    </div>
+
+    <div class="logos-box">
+      <div class="intro">
+        <!-- This map is part of C40 | Crea project. -->
+      </div>
+      <div class="logos">
+        <a href="https://energyandcleanair.org">
+          <img
+            src="https://energyandcleanair.org/wp/wp-content/uploads/2020/01/CREA-logo.svg"
+            height="40px"
+        /></a>
+      </div>
+    </div>
+
+    <script>
+      //*********************
+      // Display parameters
+      //*********************
+
+      // Hotspots
+      var hotspot_radius = 3;
+      var color_smelter = "#F93445";
+      var color_volcano = "#5b9279";
+      var color_oilgas = "blue";
+      var color_coal = "#2d2a3e";
+
+      // Powerplants
+      var color_powerplant_coal = "black";
+      var color_powerplant_oil = "#444";
+      var color_powerplant_gas = "darkgreen";
+
+      // Emissions
+      // var min = 0.5;
+      // var max = 80;
+      //   var pow = 0.7;
+      //   var scale = chroma
+      //     .scale(["yellow", "navy"])
+      //     .mode("lch")
+      //     .domain([min, Math.pow(max, pow)]);
+      var pow = 1;
+      const levels_min = [
+        0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 0.75, 1, 1.25, 1.5, 2, 3, 4, 5, 6, 7, 8,
+        10,
+      ];
+
+      function* pairwise(iterable) {
+        const iterator = iterable[Symbol.iterator]();
+        let current = iterator.next();
+        let next = iterator.next();
+        while (!next.done) {
+          yield [current.value, next.value].join("-");
+          current = next;
+          next = iterator.next();
+        }
+        yield ">" + current.value;
+      }
+      const levels_legend_values = Array.from(pairwise(levels_min));
+
+      var scale = chroma
+        .scale([
+          "#fcfdbf",
+          "#f8d68b",
+          "#efa961",
+          "#ce6170",
+          "#812581",
+          "#000004",
+        ])
+        .domain([0.5, 1, 3, 5, 8, 10]);
+
+      var scale_element = document.getElementById("legend");
+
+      Object.keys(levels_min).forEach(function (key, i) {
+        scale_element.innerHTML +=
+          '<div><span style="background-color:' +
+          scale(Math.pow(key, pow)).hex() +
+          '"></span>' +
+          levels_legend_values[i] +
+          "</div>";
+      });
+
+      // Adding elements
+      // var hotspots_name = "hotspots-dots";
+      // var hotspots_dots_source = {
+      //   type: "vector",
+      //   url: "mapbox://hubert-thieriot.2ydcm5hc",
+      // };
+
+      // var hotspots_emissions_name = "hotspots-emissions";
+      // var hotspots_emissions_source = {
+      //   type: "vector",
+      //   url: "mapbox://hubert-thieriot.17q05j0b",
+      // };
+
+      // function hotspots_emissions_layer(year_str) {
+      //   return {
+      //     id: "layer-hotspots-emissions",
+      //     source: "hotspots-emissions",
+      //     "source-layer": "hotspot_values-3wpxn5",
+      //     type: "circle",
+      //     layout: {
+      //       visibility: "visible",
+      //     },
+      //     filter: [
+      //       "all",
+      //       ["match", ["get", "SOURCETY"], ["", "Volcano"], false, true],
+      //     ],
+      //     paint: {
+      //       "circle-radius": [
+      //         "interpolate",
+      //         ["linear"],
+      //         ["get", year_str],
+      //         10,
+      //         2,
+      //         1800,
+      //         50,
+      //       ],
+      //       "circle-color": "hsla(0, 0%, 100%, 0)",
+      //       "circle-stroke-width": 1,
+      //       "circle-stroke-color": [
+      //         "match",
+      //         ["get", "SOURCETY"],
+      //         ["Coal"],
+      //         color_coal,
+      //         ["Volcano"],
+      //         color_volcano,
+      //         ["Smelter"],
+      //         color_smelter,
+      //         ["Oil & Gas"],
+      //         color_oilgas,
+      //         "#000000",
+      //       ],
+      //     },
+      //   };
+      // }
+
+      var powerplants_name = "powerplants";
+      var powerplants_source = {
+        type: "vector",
+        url: "mapbox://hubert-thieriot.3utfy59m",
+      };
+
+      var powerplants_layer = {
+        id: "layer-powerplants",
+        source: powerplants_name,
+        "source-layer": "Power_plants-4kwf88",
+        type: "circle",
+        layout: {
+          visibility: "visible",
+        },
+        paint: {
+          "circle-radius": hotspot_radius,
+          "circle-color": [
+            "match",
+            ["get", "Fuel"],
+            ["Coal"],
+            color_powerplant_coal,
+            ["Oil"],
+            color_powerplant_oil,
+            ["Gas"],
+            color_powerplant_gas,
+            ["Petcoke"], //only one or two in the US
+            color_powerplant_coal,
+            "#000000",
+          ],
+        },
+      };
+
+      mapboxgl.accessToken =
+        "pk.eyJ1IjoiaHViZXJ0LXRoaWVyaW90IiwiYSI6ImNrZWpydm1yZjFhYWwydXFiNXp2YzVhaXcifQ.j61s7IWe1FpvaEr2fHQQbA";
+
+      // A selector or reference to HTML element
+      var container = "map";
+
+      var map = new mapboxgl.Map({
+        container: container,
+        style: "mapbox://styles/mapbox/light-v10",
+        center: [0, 0],
+        zoom: 2,
+        attributionControl: false,
+      });
+
+      function addDisclaimer(map_) {
+        map_.addControl(
+          new mapboxgl.AttributionControl({
+            compact: false,
+            customAttribution:
+              "<div class='tooltip'><span class='mapboxgl-ctrl-attrib mapbox-improve-map'>Disclaimer:</span> Boundaries on this map reflect the data source used (OpenStreetMap)" +
+              "<span class='tooltiptext'>CREA is politically independent and does not take sides in territorial disputes." +
+              " The designations employed and the presentation of the material on this map do not imply the expression of any opinion " +
+              "whatsoever concerning the legal status of any country, territory, city or area or of its authorities, " +
+              "or concerning the delimitation of its frontiers or boundaries.</span></div>",
+          })
+        );
+      }
+
+      addDisclaimer(map);
+
+      map.on("load", function () {
+        map.addSource("source-pm25-new", {
+          type: "geojson",
+          data: "https://raw.githubusercontent.com/energyandcleanair/202201_c40_article_map/master/data/pm25_annual_new.geojson",
+        });
+
+        map.addSource("source-pm25-operating", {
+          type: "geojson",
+          data: "https://raw.githubusercontent.com/energyandcleanair/202201_c40_article_map/master/data/pm25_annual_operating.geojson",
+        });
+
+        map.addSource("source-no2-new", {
+          type: "geojson",
+          data: "https://raw.githubusercontent.com/energyandcleanair/202201_c40_article_map/master/data/no2_annual_new.geojson",
+        });
+
+        map.addSource("source-no2-operating", {
+          type: "geojson",
+          data: "https://raw.githubusercontent.com/energyandcleanair/202201_c40_article_map/master/data/no2_annual_operating.geojson",
+        });
+
+        map.addLayer({
+          id: "layer-pm25-new",
+          source: "source-pm25-new",
+          type: "fill",
+          layout: { visibility: "visible" },
+          paint: {
+            "fill-color": [
+              "interpolate",
+              ["linear"],
+              ["get", "min"],
+              ...levels_min
+                .map(function (min) {
+                  return [min, scale(Math.pow(min, pow)).hex()];
+                })
+                .flat(),
+            ],
+            "fill-opacity": 0.75,
+          },
+        });
+
+        map.addLayer({
+          id: "layer-pm25-operating",
+          source: "source-pm25-operating",
+          type: "fill",
+          layout: { visibility: "visible" },
+          paint: {
+            "fill-color": [
+              "interpolate",
+              ["linear"],
+              ["get", "min"],
+              ...levels_min
+                .map(function (min) {
+                  return [min, scale(Math.pow(min, pow)).hex()];
+                })
+                .flat(),
+            ],
+            "fill-opacity": 0.75,
+          },
+        });
+
+        map.addLayer({
+          id: "layer-no2-new",
+          source: "source-no2-new",
+          type: "fill",
+          layout: { visibility: "visible" },
+          paint: {
+            "fill-color": [
+              "interpolate",
+              ["linear"],
+              ["get", "min"],
+              ...levels_min
+                .map(function (min) {
+                  return [min, scale(Math.pow(min, pow)).hex()];
+                })
+                .flat(),
+            ],
+            "fill-opacity": 0.75,
+          },
+        });
+
+        map.addLayer({
+          id: "layer-no2-operating",
+          source: "source-no2-operating",
+          type: "fill",
+          layout: { visibility: "visible" },
+          paint: {
+            "fill-color": [
+              "interpolate",
+              ["linear"],
+              ["get", "min"],
+              ...levels_min
+                .map(function (min) {
+                  return [min, scale(Math.pow(min, pow)).hex()];
+                })
+                .flat(),
+            ],
+            "fill-opacity": 0.75,
+          },
+        });
+
+        // map.addSource(hotspots_name, hotspots_dots_source);
+        // map.addLayer(hotspots_dots_layer);
+
+        map.addSource(powerplants_name, powerplants_source);
+        map.addLayer(powerplants_layer);
+
+        // map.addSource(hotspots_emissions_name, hotspots_emissions_source);
+        // map.addLayer(hotspots_emissions_layer("y2019"));
+      });
+
+      // enumerate ids of the layers
+      var toggleableLayerIds = [
+        {
+          id: "layer-powerplants",
+          name: "Fossil Fueled Power Plants",
+          visibility: "visible",
+        },
+        {
+          id: "layer-pm25-new",
+          name: "PM2.5 New power plants",
+          visibility: "visible",
+        },
+        {
+          id: "layer-pm25-operating",
+          name: "PM2.5 Operating power plants",
+          visibility: "visible",
+        },
+        {
+          id: "layer-no2-new",
+          name: "NO2 New power plants",
+          visibility: "visible",
+        },
+        {
+          id: "layer-no2-operating",
+          name: "NO2 Operating power plants",
+          visibility: "visible",
+        },
+      ];
+
+      // set up the corresponding toggle button for each layer
+      for (var i = 0; i < toggleableLayerIds.length; i++) {
+        var id = toggleableLayerIds[i].id;
+        var name = toggleableLayerIds[i].name;
+        var visibility = toggleableLayerIds[i].visibility;
+
+        var link = document.createElement("a");
+        link.href = "#";
+        link.className = visibility == "visible" ? "active" : "";
+        link.textContent = name;
+        link.id = id;
+
+        link.onclick = function (e) {
+          var clickedLayer = this.id;
+          e.preventDefault();
+          e.stopPropagation();
+
+          var visibility = map.getLayoutProperty(clickedLayer, "visibility");
+
+          // toggle layer visibility by changing the layout object's visibility property
+          if (visibility === "visible") {
+            map.setLayoutProperty(clickedLayer, "visibility", "none");
+            this.className = "";
+          } else {
+            this.className = "active";
+            map.setLayoutProperty(clickedLayer, "visibility", "visible");
+          }
+        };
+
+        var layers = document.getElementById("menu");
+        layers.appendChild(link);
+      }
+      // Popup
+      // Create a popup, but don't add it to the map yet.
+      var popup = new mapboxgl.Popup({
+        closeButton: false,
+        closeOnClick: false,
+      });
+
+      function addPowerplantPopup(map_) {
+        map_.on("mouseenter", "layer-powerplants", function (e) {
+          map_.getCanvas().style.cursor = "pointer";
+          console.log("AAA");
+          var coordinates = e.features[0].geometry.coordinates.slice();
+          var props = e.features[0].properties;
+          var legend = `<div class="popup"><h4>${props.Plant}</h4><span>Fuel: ${props.Fuel}</span><span>Capacity: ${props.Capacity} MW</span></div>`;
+          while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+          }
+          popup.setLngLat(coordinates).setHTML(legend).addTo(map_);
+        });
+
+        map_.on("mouseleave", "layer-powerplants", function () {
+          map_.getCanvas().style.cursor = "";
+          popup.remove();
+        });
+      }
+
+      addPowerplantPopup(map);
+
+      function addHotspotPopup(map_) {
+        map_.on("mouseenter", "layer-hotspots-dots", function (e) {
+          map_.getCanvas().style.cursor = "pointer";
+          console.log("AAA");
+          var coordinates = e.features[0].geometry.coordinates.slice();
+          var props = e.features[0].properties;
+          var legend = `<div class="popup"><h4>${props.NASA_NAME}</h4><span>Type: ${props.SOURCETY}</span><span>Country: ${props.COUNTRY}</span></div>`;
+          while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+          }
+          popup.setLngLat(coordinates).setHTML(legend).addTo(map_);
+        });
+
+        map_.on("mouseleave", "layer-hotspots-dots", function () {
+          map_.getCanvas().style.cursor = "";
+          popup.remove();
+        });
+      }
+
+      // addHotspotPopup(map);
+
+      function addPm25Popup(map_) {
+        map_.on("mousemove", "layer-pm25-contours", function (e) {
+          map_.getCanvas().style.cursor = "pointer";
+          var coordinates = e.features[0].geometry.coordinates.slice();
+          var props = e.features[0].properties;
+          console.log(e);
+          var legend = `<div class="popup"><h4>PM 2.5</h4><span>Level: ${props.level} µg/m3</span></div>`;
+          while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+          }
+          popup.setLngLat(e.lngLat).setHTML(legend).addTo(map_);
+        });
+
+        map_.on("mouseleave", "layer-pm25-contours", function () {
+          map_.getCanvas().style.cursor = "";
+          popup.remove();
+        });
+      }
+
+      // addPm25Popup(map);
+
+      function yoy(props) {
+        r = ((props.y2019 - props.y2018) / props.y2018) * 100;
+        rs = Math.round(r * 10) / 10 + "%";
+        return r > 0 ? "+" + rs : rs;
+      }
+
+      function yoyClass(props) {
+        r = ((props.y2019 - props.y2018) / props.y2018) * 100;
+        return r > 0 ? "yoy-red" : "yoy-green";
+      }
+
+      function addHotspotEmissionPopup(map_) {
+        map_.on("mouseenter", "layer-hotspots-emissions", function (e) {
+          map_.getCanvas().style.cursor = "pointer";
+          var coordinates = e.features[0].geometry.coordinates.slice();
+          var props = e.features[0].properties;
+          console.log(e);
+          var legend = `<div class="popup"><h4>${props.NASA_NAME}</h4>
+          <span>Type: ${props.SOURCETY}</span>
+          <span>Country: ${props.COUNTRY}</span>
+          <h5>SO2 emissions</h5>
+          <span>2018: <a class='value'>${Math.round(
+            props.y2018
+          )} kt SO2/yr</a></span>
+          <span>2019: <a class='value'>${Math.round(
+            props.y2019
+          )} kt SO2/yr</a></span>
+          <span>Year-on-year: <a class="${yoyClass(props)}">${yoy(
+            props
+          )}</a></span>`;
+          while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+          }
+          popup.setLngLat(coordinates).setHTML(legend).addTo(map_);
+        });
+
+        map_.on("mouseleave", "layer-hotspots-emissions", function () {
+          map_.getCanvas().style.cursor = "";
+          popup.remove();
+        });
+      }
+
+      addHotspotEmissionPopup(map);
+    </script>
+  </body>
+</html>
