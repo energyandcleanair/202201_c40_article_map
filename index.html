@@ -428,13 +428,13 @@
             ["get", "Fuel"],
             ["Coal"],
             color_powerplant_coal,
-            ["Oil"],
-            color_powerplant_oil,
-            ["Gas"],
-            color_powerplant_gas,
-            ["Petcoke"], //only one or two in the US
-            color_powerplant_coal,
-            "#000000",
+            // ["Oil"],
+            // color_powerplant_oil,
+            // ["Gas"],
+            // color_powerplant_gas,
+            // ["Petcoke"], //only one or two in the US
+            // color_powerplant_coal,
+            // "#000000",
           ],
         },
       };
@@ -573,8 +573,61 @@
         // map.addSource(hotspots_name, hotspots_dots_source);
         // map.addLayer(hotspots_dots_layer);
 
-        map.addSource(powerplants_name, powerplants_source);
-        map.addLayer(powerplants_layer);
+        // map.addSource(powerplants_name, powerplants_source);
+        // map.addLayer(powerplants_layer);
+
+        map.addSource("source-powerplants", {
+          type: "geojson",
+          data: "https://raw.githubusercontent.com/energyandcleanair/202201_c40_article_map/master/data/gcpt_july2021_operating.geojson",
+        });
+
+        map.addLayer({
+          id: "layer-powerplants",
+          source: "source-powerplants",
+          type: "circle",
+          layout: { visibility: "visible" },
+          paint: {
+            "circle-radius": 3,
+            "circle-color": "#cacaca",
+            "circle-opacity": 0.75,
+            "circle-stroke-color": "#888888",
+            "circle-stroke-width": 1,
+          },
+        });
+
+        map.addSource("source-cities", {
+          type: "geojson",
+          data: "https://raw.githubusercontent.com/energyandcleanair/202201_c40_article_map/master/data/cities.geojson",
+        });
+
+        map.addLayer({
+          id: "layer-cities",
+          source: "source-cities",
+          type: "circle",
+          layout: { visibility: "visible" },
+          paint: {
+            "circle-radius": 5,
+            "circle-color": "#35416C",
+            "circle-opacity": 1,
+          },
+        });
+
+        map.addSource("source-domains", {
+          type: "geojson",
+          data: "https://raw.githubusercontent.com/energyandcleanair/202201_c40_article_map/master/data/domains.geojson",
+        });
+
+        map.addLayer({
+          id: "layer-domains",
+          source: "source-domains",
+          type: "line",
+          layout: { visibility: "visible" },
+          paint: {
+            "line-color": "red",
+            "line-dasharray": [2, 2],
+            "line-width": 1,
+          },
+        });
 
         // map.addSource(hotspots_emissions_name, hotspots_emissions_source);
         // map.addLayer(hotspots_emissions_layer("y2019"));
