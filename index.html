@@ -2,12 +2,12 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>C40 Health Impact Assessment</title>
+    <title>C40 | Coal-fired power plants contribution to air pollution</title>
     <meta
       name="viewport"
       content="initial-scale=1,maximum-scale=1,user-scalable=no"
     />
-    <script src="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js"></script>
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.js"></script>
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/chroma-js/2.1.0/chroma.min.js"
       integrity="sha512-yocoLferfPbcwpCMr8v/B0AB4SWpJlouBwgE0D3ZHaiP1nuu5djZclFEIj9znuqghaZ3tdCMRrreLoM8km+jIQ=="
@@ -19,7 +19,7 @@
     />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <link
-      href="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css"
+      href="https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.css"
       rel="stylesheet"
     />
     <script
@@ -69,6 +69,7 @@
       .title h2 {
         color: "black";
         margin: 0;
+        font-size: 1.325rem;
       }
 
       .legend {
@@ -88,6 +89,7 @@
 
       .legend-box h4 {
         margin: 0 0 10px;
+        font-size: 1rem;
       }
 
       .legend-box div span {
@@ -128,16 +130,16 @@
 
       #menu a:hover {
         background-color: #f8f8f8;
-        color: #404040;
+        color: #35416c;
       }
 
       #menu a.active {
-        background-color: #3887be;
+        background-color: #35416c;
         color: #ffffff;
       }
 
       #menu a.active:hover {
-        background: #3074a4;
+        background: #35416c;
       }
 
       .popup h4 {
@@ -505,37 +507,45 @@
       //   };
       // }
 
-      var powerplants_name = "powerplants";
-      var powerplants_source = {
-        type: "vector",
-        url: "mapbox://hubert-thieriot.3utfy59m",
-      };
+      // var powerplants_name = "powerplants";
+      // var powerplants_source = {
+      //   type: "vector",
+      //   url: "mapbox://hubert-thieriot.3utfy59m",
+      // };
 
-      var powerplants_layer = {
-        id: "layer-powerplants",
-        source: powerplants_name,
-        "source-layer": "Power_plants-4kwf88",
-        type: "circle",
-        layout: {
-          visibility: "visible",
-        },
-        paint: {
-          "circle-radius": hotspot_radius,
-          "circle-color": [
-            "match",
-            ["get", "Fuel"],
-            ["Coal"],
-            color_powerplant_coal,
-            // ["Oil"],
-            // color_powerplant_oil,
-            // ["Gas"],
-            // color_powerplant_gas,
-            // ["Petcoke"], //only one or two in the US
-            // color_powerplant_coal,
-            // "#000000",
-          ],
-        },
-      };
+      // var powerplants_layer = {
+      //   id: "layer-powerplants",
+      //   source: powerplants_name,
+      //   "source-layer": "Power_plants-4kwf88",
+      //   type: "circle",
+      //   layout: {
+      //     visibility: "visible",
+      //   },
+      //   paint: {
+      //     "circle-radius": [
+      //       "interpolate",
+      //       ["linear"],
+      //       ["get", "capacity_mw"],
+      //       50,
+      //       2,
+      //       1000,
+      //       50,
+      //     ],
+      //     "circle-color": [
+      //       "match",
+      //       ["get", "Fuel"],
+      //       ["Coal"],
+      //       color_powerplant_coal,
+      //       // ["Oil"],
+      //       // color_powerplant_oil,
+      //       // ["Gas"],
+      //       // color_powerplant_gas,
+      //       // ["Petcoke"], //only one or two in the US
+      //       // color_powerplant_coal,
+      //       // "#000000",
+      //     ],
+      //   },
+      // };
 
       mapboxgl.accessToken =
         "pk.eyJ1IjoiaHViZXJ0LXRoaWVyaW90IiwiYSI6ImNrZWpydm1yZjFhYWwydXFiNXp2YzVhaXcifQ.j61s7IWe1FpvaEr2fHQQbA";
@@ -551,6 +561,7 @@
         center: [0, 0],
         zoom: 2,
         attributionControl: false,
+        projection: "equirectangular",
       });
 
       function addDisclaimer(map_) {
@@ -678,7 +689,7 @@
 
         map.addSource("source-powerplants", {
           type: "geojson",
-          data: "https://raw.githubusercontent.com/energyandcleanair/202201_c40_article_map/master/data/gcpt_july2021_operating.geojson",
+          data: "https://raw.githubusercontent.com/energyandcleanair/202201_c40_article_map/master/data/gcpt_july2021_operating_clustered200km.geojson",
         });
 
         map.addLayer({
@@ -686,12 +697,22 @@
           source: "source-powerplants",
           type: "circle",
           layout: { visibility: "visible" },
+          // filter: [">", ["get", "capaciy_mw"], 300],
           paint: {
-            "circle-radius": 3,
+            "circle-radius": [
+              "interpolate",
+              ["linear"],
+              ["get", "capacity_mw"],
+              50,
+              1,
+              20000,
+              6,
+            ],
             "circle-color": "#cacaca",
-            "circle-opacity": 0.75,
-            "circle-stroke-color": "#888888",
+            "circle-opacity": 0,
+            "circle-stroke-color": "#777777",
             "circle-stroke-width": 1,
+            "circle-stroke-opacity": 0.8,
           },
         });
 
@@ -751,66 +772,46 @@
         map.setLayoutProperty(layer_id, "visibility", "visible");
       }
 
-      // var toggleableLayerIds = [
-      //   {
-      //     id: "layer-powerplants",
-      //     name: "Operating coal-fired power plants",
-      //     visibility: "visible",
-      //   },
-      //   {
-      //     id: "layer-pm25-new",
-      //     name: "PM2.5 New power plants",
-      //     visibility: "visible",
-      //   },
-      //   {
-      //     id: "layer-pm25-operating",
-      //     name: "PM2.5 Operating power plants",
-      //     visibility: "visible",
-      //   },
-      //   {
-      //     id: "layer-no2-new",
-      //     name: "NO2 New power plants",
-      //     visibility: "visible",
-      //   },
-      //   {
-      //     id: "layer-no2-operating",
-      //     name: "NO2 Operating power plants",
-      //     visibility: "visible",
-      //   },
-      // ];
+      var toggleableLayerIds = [
+        {
+          id: "layer-powerplants",
+          name: "Operating coal-fired power plants",
+          visibility: "visible",
+        },
+      ];
 
-      // // set up the corresponding toggle button for each layer
-      // for (var i = 0; i < toggleableLayerIds.length; i++) {
-      //   var id = toggleableLayerIds[i].id;
-      //   var name = toggleableLayerIds[i].name;
-      //   var visibility = toggleableLayerIds[i].visibility;
+      // set up the corresponding toggle button for each layer
+      for (var i = 0; i < toggleableLayerIds.length; i++) {
+        var id = toggleableLayerIds[i].id;
+        var name = toggleableLayerIds[i].name;
+        var visibility = toggleableLayerIds[i].visibility;
 
-      //   var link = document.createElement("a");
-      //   link.href = "#";
-      //   link.className = visibility == "visible" ? "active" : "";
-      //   link.textContent = name;
-      //   link.id = id;
+        var link = document.createElement("a");
+        link.href = "#";
+        link.className = visibility == "visible" ? "active" : "";
+        link.textContent = name;
+        link.id = id;
 
-      //   link.onclick = function (e) {
-      //     var clickedLayer = this.id;
-      //     e.preventDefault();
-      //     e.stopPropagation();
+        link.onclick = function (e) {
+          var clickedLayer = this.id;
+          e.preventDefault();
+          e.stopPropagation();
 
-      //     var visibility = map.getLayoutProperty(clickedLayer, "visibility");
+          var visibility = map.getLayoutProperty(clickedLayer, "visibility");
 
-      //     // toggle layer visibility by changing the layout object's visibility property
-      //     if (visibility === "visible") {
-      //       map.setLayoutProperty(clickedLayer, "visibility", "none");
-      //       this.className = "";
-      //     } else {
-      //       this.className = "active";
-      //       map.setLayoutProperty(clickedLayer, "visibility", "visible");
-      //     }
-      //   };
+          // toggle layer visibility by changing the layout object's visibility property
+          if (visibility === "visible") {
+            map.setLayoutProperty(clickedLayer, "visibility", "none");
+            this.className = "";
+          } else {
+            this.className = "active";
+            map.setLayoutProperty(clickedLayer, "visibility", "visible");
+          }
+        };
 
-      //   var layers = document.getElementById("menu");
-      //   layers.appendChild(link);
-      // }
+        var layers = document.getElementById("menu");
+        layers.appendChild(link);
+      }
       // Popup
       // Create a popup, but don't add it to the map yet.
       var popup = new mapboxgl.Popup({
@@ -823,7 +824,7 @@
           map_.getCanvas().style.cursor = "pointer";
           var coordinates = e.features[0].geometry.coordinates.slice();
           var props = e.features[0].properties;
-          var legend = `<div class="popup"><h4>${props.Plant}</h4><span>Fuel: ${props.Fuel}</span><span>Capacity: ${props.Capacity} MW</span></div>`;
+          var legend = `<div class="popup"><h4>${props.Plant}</h4><span>Fuel: ${props.Fuel}</span><span>Capacity: ${props.capacity_mw} MW</span></div>`;
           while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
             coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
           }
