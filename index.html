@@ -27,6 +27,8 @@
       integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
       crossorigin="anonymous"
     ></script>
+    <!-- <script src="node_modules/mapboxgl-legend/dist/index.umd.min.js"></script>
+		<link href="node_modules/mapboxgl-legend/dist/index.esm.min.css" rel="stylesheet" /> -->
   </head>
   <body>
     <style>
@@ -244,6 +246,10 @@
         vertical-align: middle;
       }
 
+      .circle-powerplant{
+        border-color: #CACACA;
+      }
+
       .color-coal {
         border-color: #2d2a3e;
       }
@@ -364,15 +370,17 @@
         <label class="btn btn-outline-primary" for="radio_new">New</label>
       </div>
 
-      <div id="legend" class="legend-box">
+      <div id="legend-cluster" class="legend-box">
+        <h4>Coal-fired cluster</h4>
+        <div><span class="circle circle-powerplant" style="height: 4px !important; width: 4px !important;"></span>50 MW</div>
+        <div><span class="circle circle-powerplant" style="height: 9px !important; width: 9px !important;"></span>1000 MW</div>
+        <div><span class="circle circle-powerplant" style="height: 14px !important; width: 14px !important;"></span>></span>20000 MW</div>
+      </div>
+
+      <div id="legend-concentration" class="legend-box">
         <h4>Annual concentration<br />[µg/m3]</h4>
       </div>
-      <!--   <div id="legend" class="legend-box">
-        <h4>SO2 Emission Hotspot</br>[kt / year]</h4>
-        <div><span class="circle color-coal"></span>Coal</div>
-        <div><span class="circle color-oilgas"></span>Oil & Gas</div>
-        <div><span class="circle color-smelter"></span>Smelter</div>
-      </div> -->
+      
     </div>
 
     <div class="logos-box">
@@ -441,7 +449,7 @@
         ])
         .domain([0.05, 0.5, 1, 3, 10]);
 
-      var scale_element = document.getElementById("legend");
+      var scale_element = document.getElementById("legend-concentration");
 
       Object.keys(levels_min).forEach(function (key, i) {
         scale_element.innerHTML +=
@@ -563,6 +571,7 @@
         attributionControl: false,
         projection: "equirectangular",
       });
+
 
       function addDisclaimer(map_) {
         map_.addControl(
