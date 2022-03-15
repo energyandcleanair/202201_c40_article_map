@@ -79,6 +79,7 @@
         bottom: 30px;
         left: 10px;
       }
+
       .legend-box {
         background-color: #fff;
         border-radius: 3px;
@@ -94,12 +95,31 @@
         font-size: 1rem;
       }
 
+      .hide-for-screenshot {
+
+      }
+
       .legend-box div span {
         border-radius: 50%;
         display: inline-block;
         height: 10px;
         margin-right: 5px;
         width: 10px;
+      }
+
+      .grad-step {
+          display: inline-block !important;
+          height: 20px !important;
+          width: 1% !important;
+          margin-right:  0 !important;
+      }
+
+      .gradient .domain {
+          position: absolute; 
+          text-align: center;
+          font-size: 11px;
+          bottom: 3px;
+          margin:  0;
       }
 
       #menu {
@@ -306,6 +326,8 @@
       .btn-primary:active {
         background-color: #8cc9d0;
       }
+
+
     </style>
     <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-compare/v0.4.0/mapbox-gl-compare.js"></script>
     <link
@@ -320,9 +342,9 @@
       <h2>C40 | Coal-fired power plants contribution to air pollution</h2>
     </div> -->
     <div class="legend">
-      <nav id="menu"></nav>
+      <nav id="menu" class="hide-for-screenshot"></nav>
 
-      <div class="btn-group" id="radio-pollutant">
+      <div class="btn-group hide-for-screenshot" id="radio-pollutant">
         <input
           type="radio"
           class="btn-check"
@@ -345,7 +367,7 @@
         <label class="btn btn-outline-primary" for="radio_no2">NO2</label>
       </div>
       <br />
-      <div class="btn-group" id="radio-scenario">
+      <div class="btn-group hide-for-screenshot" id="radio-scenario">
         <input
           type="radio"
           class="btn-check"
@@ -370,16 +392,20 @@
         <label class="btn btn-outline-primary" for="radio_new">New</label>
       </div>
 
-      <div id="legend-cluster" class="legend-box">
-        <h4>Coal-fired cluster</h4>
-        <div><span class="circle circle-powerplant" style="height: 4px !important; width: 4px !important;"></span>50 MW</div>
-        <div><span class="circle circle-powerplant" style="height: 9px !important; width: 9px !important;"></span>1000 MW</div>
-        <div><span class="circle circle-powerplant" style="height: 14px !important; width: 14px !important;"></span>></span>20000 MW</div>
-      </div>
+<!--       <div style="display:  flex;">
+ -->
+        <div id="legend-cluster" class="legend-box" style="margin-right: 0;">
+          <h4>Coal-fired cluster</h4>
+          <div><span class="circle circle-powerplant" style="height: 4px !important; width: 4px !important;"></span>50 MW</div>
+          <div><span class="circle circle-powerplant" style="height: 9px !important; width: 9px !important;"></span>1000 MW</div>
+          <div><span class="circle circle-powerplant" style="height: 14px !important; width: 14px !important;"></span>></span>20000 MW</div>
+        </div>
 
-      <div id="legend-concentration" class="legend-box">
-        <h4>Annual concentration<br />[µg/m3]</h4>
-      </div>
+        <div id="legend-concentration" class="legend-box" style="width: 220px;">
+          <h4>Annual concentration<br />[µg/m3]</h4>
+        </div>
+
+      <!-- </div> -->
       
     </div>
 
@@ -451,14 +477,38 @@
 
       var scale_element = document.getElementById("legend-concentration");
 
-      Object.keys(levels_min).forEach(function (key, i) {
-        scale_element.innerHTML +=
-          '<div><span style="background-color:' +
-          scale(Math.pow(key, pow)).hex() +
-          '"></span>' +
-          levels_legend_values[i] +
-          "</div>";
-      });
+      // Object.keys(levels_min).forEach(function (key, i) {
+      //   scale_element.innerHTML +=
+      //     '<div><span style="background-color:' +
+      //     scale(Math.pow(key, pow)).hex() +
+      //     '"></span>' +
+      //     levels_legend_values[i] +
+      //     "</div>";
+      // });
+
+
+      // New version
+      var s = '';
+      var dom = [0.05, 10],
+          dmin = 0.05,
+          dmax = 10;
+      
+      for (var i = 0; i < 100; i++) {
+
+          s +=
+              '<span class="grad-step" style="background-color:' +  
+              scale(Math.pow(dmin + (i / 100) * (dmax - dmin), pow)).hex() +
+              '"></span>';
+      }
+      s += '<div style="position: relative; margin: 5px 5px 10px 5px;">'
+      s += '<span class="domain" style="left: 0;">' + dmin + '</span>';
+      s += '<span class="domain" style="left: 25%; right: 75%;">' + 0.5 + '</span>';
+      s += '<span class="domain" style="left: 50%; right: 50%;">' + 1 + '</span>';
+      s += '<span class="domain" style="left: 75%; right: 25%;">' + 3 + '</span>';
+      s += '<span class="domain" style="right: 0;">' + dmax + '</span>';
+      s += '</div>'
+      scale_element.innerHTML += '<div class="gradient">' + s + '</div>';
+
 
       // Adding elements
       // var hotspots_name = "hotspots-dots";
@@ -573,21 +623,21 @@
       });
 
 
-      function addDisclaimer(map_) {
-        map_.addControl(
-          new mapboxgl.AttributionControl({
-            compact: false,
-            customAttribution:
-              "<div class='tooltip'><span class='mapboxgl-ctrl-attrib mapbox-improve-map'>Disclaimer:</span> Boundaries on this map reflect the data source used (OpenStreetMap)" +
-              "<span class='tooltiptext'>CREA is politically independent and does not take sides in territorial disputes." +
-              " The designations employed and the presentation of the material on this map do not imply the expression of any opinion " +
-              "whatsoever concerning the legal status of any country, territory, city or area or of its authorities, " +
-              "or concerning the delimitation of its frontiers or boundaries.</span></div>",
-          })
-        );
-      }
+      // function addDisclaimer(map_) {
+      //   map_.addControl(
+      //     new mapboxgl.AttributionControl({
+      //       compact: false,
+      //       customAttribution:
+      //         "<div class='tooltip'><span class='mapboxgl-ctrl-attrib mapbox-improve-map'>Disclaimer:</span> Boundaries on this map reflect the data source used (OpenStreetMap)"
+      //         // "<span class='tooltiptext'>CREA is politically independent and does not take sides in territorial disputes." +
+      //         // " The designations employed and the presentation of the material on this map do not imply the expression of any opinion " +
+      //         // "whatsoever concerning the legal status of any country, territory, city or area or of its authorities, " +
+      //         // "or concerning the delimitation of its frontiers or boundaries.</span></div>",
+      //     })
+      //   );
+      // }
 
-      addDisclaimer(map);
+      // addDisclaimer(map);
 
       map.on("load", function () {
         map.addSource("source-pm25-new", {
